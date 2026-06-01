@@ -2,10 +2,8 @@
 
 import torch
 import torch.optim as optim
-from .ccsrd import CCSRD
-from .utils  import CCSRDLoss
-from .speech_encoder import SpeechEncoder
-
+from .models import CCSRD
+from .models import CCSRDLoss, CCSRD, SpeechEncoder
 
 def train_ccsrd_example():
     d_model      = 512
