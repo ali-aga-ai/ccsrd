@@ -1,3 +1,6 @@
+import torch
+from transformers import AutoTokenizer
+from models import CCSRD   
 
 def tokenize(tokenizer, texts):
         encoded = tokenizer(
@@ -15,7 +18,7 @@ def tokenize(tokenizer, texts):
 # INFERENCE
 # -------------------
 
-def infer(model, waveform, tokenizer, max_len=20):
+def infer(model, waveform, tokenizer, device, max_len=20):
 
     model.eval()
     with torch.no_grad():
