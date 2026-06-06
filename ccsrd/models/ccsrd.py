@@ -32,6 +32,7 @@ class CCSRD(nn.Module):
         tgt_tokens: (B, T_tgt)     integer token ids (optional, for training)
         lam:        GRL lambda scaling factor
         """
+        # H is the speech encoder output. 
         H    = self.speech_encoder(waveform)       # (B, T, 512)
         Z_c  = self.content_encoder(H)             # (B, T, 512)
         Z_nc = self.non_content_encoder(H)         # (B, T, 512)
@@ -56,6 +57,7 @@ class CCSRD(nn.Module):
             'translation_logits':translation_logits,
         }
 
+    # the following two functions are for inference.
     @torch.no_grad()
     def encode_audio(self, waveform):
         """Inference: only speech + content encoder needed."""

@@ -40,7 +40,7 @@ class TranslationDecoder(nn.Module):
         self.output_projection = nn.Linear(d_model, vocab_size)
 
     def forward(self, tgt_emb, memory):
-        # tgt_emb: (B, T_tgt, d_model)  -- already embedded by caller
+        # tgt_emb: (B, T_tgt, d_model)  -- during training, the model sees all the previous tokens (with teacher forcing), during inference, it sees only the previous generated tokens
         # memory:  (B, T,     d_model)  -- Z_c from content encoder
         out = self.decoder(tgt_emb, memory)       # (B, T_tgt, d_model)
         return self.output_projection(out)         # (B, T_tgt, vocab_size)
