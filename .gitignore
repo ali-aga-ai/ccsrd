@@ -1,3 +1,4 @@
 *.wav
 *.pt
 test.py
+__pycache__
