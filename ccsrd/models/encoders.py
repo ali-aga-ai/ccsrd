@@ -40,7 +40,14 @@ class TranslationDecoder(nn.Module):
         self.output_projection = nn.Linear(d_model, vocab_size)
 
     def forward(self, tgt_emb, memory):
+
+        T = tgt_emb.shape[1]
+        # causal mask prevents decoder from seeing future tokens
+
+        causal_mask = torch.nn.Transformer.generate_square_subsequent_mask(
+            T, device=tgt_emb.device
+        )
         # tgt_emb: (B, T_tgt, d_model)  -- during training, the model sees all the previous tokens (with teacher forcing), during inference, it sees only the previous generated tokens
         # memory:  (B, T,     d_model)  -- Z_c from content encoder
-        out = self.decoder(tgt_emb, memory)       # (B, T_tgt, d_model)
+        out = self.decoder(tgt_emb, memory, tgt_mask=causal_mask)       # (B, T_tgt, d_model)
         return self.output_projection(out)         # (B, T_tgt, vocab_size)
