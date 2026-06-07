@@ -8,6 +8,13 @@ def load_data_samples(num_samples=300):
         split="validation",
         streaming=True
     )
+    samples = []
+    for x in ds:
+        if x["tgt_text"]["deu"] is not None:   # only keep samples with German
+            samples.append(x)
+        if len(samples) >= num_samples:
+            break
+            
     return list(ds.take(num_samples))
     
 def build_speaker_map(dataset):

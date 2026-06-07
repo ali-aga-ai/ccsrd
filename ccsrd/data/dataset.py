@@ -12,7 +12,7 @@ class ExpressoDataset(torch.utils.data.Dataset):
         x = self.data[idx]
 
         waveform = torch.tensor(x["audio"]["array"], dtype=torch.float32)
-        text = x["src_text"]
+        text = x["tgt_text"]["deu"] 
         spk = torch.tensor(self.spk2id[x["src_speaker"]], dtype=torch.long)
 
         return waveform, text, spk
